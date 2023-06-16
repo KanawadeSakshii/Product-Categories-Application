@@ -3,6 +3,8 @@ import java.io.Serializable;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,8 +22,11 @@ public class Product implements Serializable {
 
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id",
+    		nullable = false,
+            foreignKey = @ForeignKey(
+                    name = "pcategory_id"))
     private Category category;
 
 	public Product() {

@@ -68,8 +68,12 @@ public class ProductController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product ) {
-    	Product Productupdate= productService.saveProduct(product);
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product ) {
+    	Product getnewProduct=productService.getProductById(id);
+    	getnewProduct.setId(product.getId());
+    	getnewProduct.setName(product.getName());
+    	getnewProduct.setCategory(product.getCategory());
+    	Product Productupdate= productService.saveProduct(getnewProduct);
     	logger.info("\"Product Rest Controller Implementation : updateProduct() method\"");
     	 return ResponseEntity.ok().body(Productupdate);
     }
